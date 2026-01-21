@@ -215,10 +215,12 @@ class FocusRewardApp:
 
         # 更新 UI 中的应用状态
         for app_name, app_status in status.items():
+            game_name = app_status.get('current_game', '') if app_name == 'steam' else ''
             self.main_window.update_app_status(
                 app_name,
                 app_status['is_running'],
-                app_status['today_minutes']
+                app_status['today_minutes'],
+                game_name
             )
 
     # ===== Anki 读取器回调 =====

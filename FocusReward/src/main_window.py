@@ -56,13 +56,18 @@ class StatusIndicator(QWidget):
 
         layout.addStretch()
 
-    def set_running(self, is_running: bool, duration_text: str = ""):
+    def set_running(self, is_running: bool, duration_text: str = "", game_name: str = ""):
         self._is_running = is_running
         self._duration_text = duration_text
 
         if is_running:
             self.dot.setStyleSheet("color: #22c55e; font-size: 16px;")  # 绿色
-            self.label_widget.setText(f"{self.label}: 运行中")
+            if game_name:
+                # 显示游戏名（截断过长的名称）
+                display_name = game_name[:20] + "..." if len(game_name) > 20 else game_name
+                self.label_widget.setText(f"{self.label}: {display_name}")
+            else:
+                self.label_widget.setText(f"{self.label}: 运行中")
         else:
             self.dot.setStyleSheet("color: #888888; font-size: 16px;")  # 灰色
             self.label_widget.setText(f"{self.label}: 未运行")
@@ -404,12 +409,12 @@ class DashboardPage(QWidget):
         if unlock_used:
             self.unlock_button.setText("已解锁")
 
-    def update_app_status(self, app_name: str, is_running: bool, duration_text: str):
+    def update_app_status(self, app_name: str, is_running: bool, duration_text: str, game_name: str = ""):
         """更新应用程序状态显示"""
         if app_name == 'anki':
             self.anki_status.set_running(is_running, duration_text)
         elif app_name == 'steam':
-            self.steam_status.set_running(is_running, duration_text)
+            self.steam_status.set_running(is_running, duration_text, game_name)
 
 
 class SettingsPage(QWidget):
@@ -1017,13 +1022,13 @@ class MainWindow(QMainWindow):
         """更新时间显示"""
         self.dashboard_page.update_display(time_info, target_cards)
 
-    def update_app_status(self, app_name: str, is_running: bool, minutes: int):
+    def update_app_status(self, app_name: str, is_running: bool, minutes: int, game_name: str = ""):
         """更新应用程序状态"""
         if minutes > 0:
             duration_text = f"({minutes} 分钟)"
         else:
             duration_text = ""
-        self.dashboard_page.update_app_status(app_name, is_running, duration_text)
+        self.dashboard_page.update_app_status(app_name, is_running, duration_text, game_name)
 
     def update_history(self, history_data: list):
         """更新历史数据"""
