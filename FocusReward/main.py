@@ -24,6 +24,8 @@ from src.anki_reader import AnkiReader
 from src.time_manager import TimeManager
 from src.notifications import NotificationManager
 from src.main_window import MainWindow
+from src.language_dialog import LanguageDialog
+from src.i18n import set_language, tr
 
 
 class FocusRewardApp:
@@ -39,6 +41,12 @@ class FocusRewardApp:
         self.app.setApplicationName("FocusReward")
         self.app.setQuitOnLastWindowClosed(False)  # 关闭窗口时不退出
 
+        # 初始化数据库（用于读取语言设置）
+        self.db = DatabaseManager()
+
+        # 检查并设置语言
+        self._setup_language()
+
         # 初始化组件
         self._init_components()
 
@@ -51,10 +59,21 @@ class FocusRewardApp:
         # 启动监控
         self._start_monitoring()
 
+    def _setup_language(self):
+        """设置界面语言"""
+        saved_language = self.db.get_setting('language', '')
+
+        if not saved_language:
+            # 首次运行，显示语言选择对话框
+            language_code = LanguageDialog.get_language()
+            self.db.set_setting('language', language_code)
+            set_language(language_code)
+        else:
+            set_language(saved_language)
+
     def _init_components(self):
         """初始化所有组件"""
-        # 数据库管理器
-        self.db = DatabaseManager()
+        # 注意：self.db 已在 __init__ 中创建
 
         # 进程监控器
         check_interval = int(self.db.get_setting('check_interval', '30'))

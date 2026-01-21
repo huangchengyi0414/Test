@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
     QPushButton, QProgressBar, QTabWidget, QSlider, QCheckBox,
     QFileDialog, QLineEdit, QMessageBox, QFrame, QGridLayout,
     QTableWidget, QTableWidgetItem, QHeaderView, QSpacerItem,
-    QSizePolicy, QGroupBox
+    QSizePolicy, QGroupBox, QComboBox
 )
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFont, QPalette, QColor
@@ -417,19 +417,58 @@ class SettingsPage(QWidget):
 
     settings_changed = pyqtSignal(dict)
     reset_data_clicked = pyqtSignal()
-    browse_anki_path_clicked = pyqtSignal()
+    anki_profile_changed = pyqtSignal(str)
+
+    # Anki 数据库的默认位置
+    ANKI_BASE_PATHS = [
+        os.path.expandvars('%APPDATA%\\Anki2'),  # Windows
+        os.path.expanduser('~/Library/Application Support/Anki2'),  # macOS
+        os.path.expanduser('~/.local/share/Anki2'),  # Linux
+    ]
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self._anki_profiles = {}  # {显示名称: 路径}
         self._setup_ui()
+        self._scan_anki_profiles()
+
+    def _scan_anki_profiles(self):
+        """扫描系统中的 Anki 配置文件"""
+        self._anki_profiles = {}
+        self.profile_combo.clear()
+
+        for base_path in self.ANKI_BASE_PATHS:
+            if os.path.exists(base_path):
+                try:
+                    for profile_name in os.listdir(base_path):
+                        profile_path = os.path.join(base_path, profile_name)
+                        if os.path.isdir(profile_path) and profile_name != 'addons21':
+                            db_file = os.path.join(profile_path, 'collection.anki2')
+                            if os.path.exists(db_file):
+                                # 显示名称包含配置文件名
+                                display_name = f"{profile_name}"
+                                self._anki_profiles[display_name] = db_file
+                except PermissionError:
+                    continue
+
+        # 添加到下拉选单
+        if self._anki_profiles:
+            for display_name in self._anki_profiles.keys():
+                self.profile_combo.addItem(display_name)
+            self.profile_status.setText(f"找到 {len(self._anki_profiles)} 个配置文件")
+            self.profile_status.setStyleSheet("color: #22c55e;")
+        else:
+            self.profile_combo.addItem("未找到 Anki 配置文件")
+            self.profile_status.setText("请确认 Anki 已安装并至少运行过一次")
+            self.profile_status.setStyleSheet("color: #ef4444;")
 
     def _setup_ui(self):
         layout = QVBoxLayout(self)
         layout.setSpacing(20)
         layout.setContentsMargins(20, 20, 20, 20)
 
-        # ===== Anki 数据库路径 =====
-        path_group = QGroupBox("Anki 数据库路径")
+        # ===== Anki 配置文件选择 =====
+        path_group = QGroupBox("Anki 配置文件")
         path_group.setStyleSheet("""
             QGroupBox {
                 font-size: 14px;
@@ -439,16 +478,57 @@ class SettingsPage(QWidget):
                 padding-top: 10px;
             }
         """)
-        path_layout = QHBoxLayout(path_group)
+        path_layout = QVBoxLayout(path_group)
 
-        self.path_edit = QLineEdit()
-        self.path_edit.setPlaceholderText("选择 Anki 的 collection.anki2 文件路径")
-        self.path_edit.setReadOnly(True)
-        path_layout.addWidget(self.path_edit)
+        # 下拉选单
+        combo_layout = QHBoxLayout()
+        combo_layout.addWidget(QLabel("选择配置文件:"))
+        self.profile_combo = QComboBox()
+        self.profile_combo.setMinimumWidth(200)
+        self.profile_combo.setStyleSheet("""
+            QComboBox {
+                padding: 8px;
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+            QComboBox:hover {
+                border-color: #3b82f6;
+            }
+            QComboBox::drop-down {
+                border: none;
+                width: 30px;
+            }
+        """)
+        self.profile_combo.currentIndexChanged.connect(self._on_profile_changed)
+        combo_layout.addWidget(self.profile_combo, 1)
 
-        browse_btn = QPushButton("浏览...")
-        browse_btn.clicked.connect(self._on_browse_clicked)
-        path_layout.addWidget(browse_btn)
+        # 刷新按钮
+        refresh_btn = QPushButton("刷新")
+        refresh_btn.setStyleSheet("""
+            QPushButton {
+                padding: 8px 16px;
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+            }
+            QPushButton:hover {
+                background-color: #f0f0f0;
+            }
+        """)
+        refresh_btn.clicked.connect(self._scan_anki_profiles)
+        combo_layout.addWidget(refresh_btn)
+        path_layout.addLayout(combo_layout)
+
+        # 状态提示
+        self.profile_status = QLabel("")
+        self.profile_status.setStyleSheet("color: #666666; font-size: 12px;")
+        path_layout.addWidget(self.profile_status)
+
+        # 显示当前路径
+        self.path_display = QLabel("")
+        self.path_display.setStyleSheet("color: #888888; font-size: 11px;")
+        self.path_display.setWordWrap(True)
+        path_layout.addWidget(self.path_display)
 
         layout.addWidget(path_group)
 
@@ -514,6 +594,23 @@ class SettingsPage(QWidget):
         """)
         other_layout = QVBoxLayout(other_group)
 
+        # 语言选择
+        lang_layout = QHBoxLayout()
+        lang_layout.addWidget(QLabel("界面语言:"))
+        self.language_combo = QComboBox()
+        self.language_combo.addItems(['简体中文', '繁體中文', 'English', '日本語', '한국어'])
+        self.language_combo.setStyleSheet("""
+            QComboBox {
+                padding: 5px 10px;
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+            }
+        """)
+        lang_layout.addWidget(self.language_combo)
+        lang_layout.addWidget(QLabel("(重启后生效)"))
+        lang_layout.addStretch()
+        other_layout.addLayout(lang_layout)
+
         self.auto_start_checkbox = QCheckBox("开机自动启动")
         other_layout.addWidget(self.auto_start_checkbox)
 
@@ -575,28 +672,37 @@ class SettingsPage(QWidget):
         self.minutes_value_label.setText(str(minutes))
         self.ratio_label.setText(f"复习 {cards} 张卡片 = {minutes} 分钟游戏时间")
 
-    def _on_browse_clicked(self):
-        """浏览按钮点击处理"""
-        file_path, _ = QFileDialog.getOpenFileName(
-            self,
-            "选择 Anki 数据库文件",
-            os.path.expanduser("~"),
-            "Anki Database (*.anki2);;All Files (*)"
-        )
-        if file_path:
-            self.path_edit.setText(file_path)
-            self.browse_anki_path_clicked.emit()
+    def _on_profile_changed(self, index):
+        """配置文件选择变化处理"""
+        profile_name = self.profile_combo.currentText()
+        if profile_name in self._anki_profiles:
+            path = self._anki_profiles[profile_name]
+            self.path_display.setText(f"路径: {path}")
+            self.anki_profile_changed.emit(path)
+        else:
+            self.path_display.setText("")
 
     def _on_save_clicked(self):
         """保存按钮点击处理"""
+        # 语言代码映射
+        lang_codes = {
+            '简体中文': 'zh_CN',
+            '繁體中文': 'zh_TW',
+            'English': 'en',
+            '日本語': 'ja',
+            '한국어': 'ko',
+        }
+        selected_lang = self.language_combo.currentText()
+
         settings = {
-            'anki_db_path': self.path_edit.text(),
+            'anki_db_path': self.get_anki_path(),
             'cards_per_exchange': str(self.cards_slider.value()),
             'minutes_per_exchange': str(self.minutes_slider.value()),
             'auto_start': 'true' if self.auto_start_checkbox.isChecked() else 'false',
+            'language': lang_codes.get(selected_lang, 'zh_CN'),
         }
         self.settings_changed.emit(settings)
-        QMessageBox.information(self, "保存成功", "设置已保存！")
+        QMessageBox.information(self, "保存成功", "设置已保存！\n语言变更将在重启后生效。")
 
     def _on_reset_clicked(self):
         """重置按钮点击处理"""
@@ -613,15 +719,41 @@ class SettingsPage(QWidget):
 
     def set_settings(self, settings: dict):
         """设置当前值"""
-        self.path_edit.setText(settings.get('anki_db_path', ''))
+        # 设置 Anki 配置文件选择
+        saved_path = settings.get('anki_db_path', '')
+        if saved_path:
+            # 查找匹配的配置文件
+            for display_name, path in self._anki_profiles.items():
+                if path == saved_path:
+                    index = self.profile_combo.findText(display_name)
+                    if index >= 0:
+                        self.profile_combo.setCurrentIndex(index)
+                    break
+            self.path_display.setText(f"路径: {saved_path}")
+
         self.cards_slider.setValue(int(settings.get('cards_per_exchange', '10')))
         self.minutes_slider.setValue(int(settings.get('minutes_per_exchange', '5')))
         self.auto_start_checkbox.setChecked(settings.get('auto_start', 'false') == 'true')
         self._on_slider_changed()
 
+        # 设置语言选择
+        lang_names = {
+            'zh_CN': '简体中文',
+            'zh_TW': '繁體中文',
+            'en': 'English',
+            'ja': '日本語',
+            'ko': '한국어',
+        }
+        saved_lang = settings.get('language', 'zh_CN')
+        lang_name = lang_names.get(saved_lang, '简体中文')
+        index = self.language_combo.findText(lang_name)
+        if index >= 0:
+            self.language_combo.setCurrentIndex(index)
+
     def get_anki_path(self) -> str:
-        """获取 Anki 数据库路径"""
-        return self.path_edit.text()
+        """获取当前选择的 Anki 数据库路径"""
+        profile_name = self.profile_combo.currentText()
+        return self._anki_profiles.get(profile_name, '')
 
 
 class HistoryPage(QWidget):
@@ -879,12 +1011,7 @@ class MainWindow(QMainWindow):
         self.dashboard_page.emergency_unlock_clicked.connect(self.emergency_unlock_requested.emit)
         self.settings_page.settings_changed.connect(self.settings_changed.emit)
         self.settings_page.reset_data_clicked.connect(self.reset_data_requested.emit)
-        self.settings_page.browse_anki_path_clicked.connect(self._on_anki_path_changed)
-
-    def _on_anki_path_changed(self):
-        """Anki 路径变更处理"""
-        path = self.settings_page.get_anki_path()
-        self.anki_path_changed.emit(path)
+        self.settings_page.anki_profile_changed.connect(self.anki_path_changed.emit)
 
     def update_time_display(self, time_info: dict, target_cards: int = 30):
         """更新时间显示"""
