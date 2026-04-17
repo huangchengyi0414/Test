@@ -1,6 +1,8 @@
 // PortraitWall — renders a teacher + N student portraits with Harry Potter oil-painting vibe.
 // A silhouette SVG is generated procedurally per name (stable hash), so no real photos are needed yet.
 
+import { svgPortraitFrame } from './SvgOrnaments.js';
+
 function hashStr(s) {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
@@ -174,6 +176,9 @@ export function createPortrait({ name, role, isTeacher = false }) {
   el.className = `portrait ${isTeacher ? 'teacher' : 'student'}`;
   el.appendChild(personSVG(name, isTeacher ? 999 : 0, isTeacher));
   el.appendChild(ornament());
+  const frame = svgPortraitFrame();
+  frame.classList.add('frame-ornament');
+  el.appendChild(frame);
 
   const nameEl = document.createElement('div');
   nameEl.className = 'name';

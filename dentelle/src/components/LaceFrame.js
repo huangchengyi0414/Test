@@ -1,45 +1,42 @@
-// Ornate frame — uses AI-generated PNG ornaments imported through Vite,
-// so they're bundled into the standalone HTML as base64.
-// Black background is removed at display time via CSS mix-blend-mode: screen.
+// Ornate frame — currently using animated SVG placeholders (pano-X-ray style,
+// rose-gold). Swap to AI PNGs later by re-enabling the PNG imports below
+// and switching cornerImg / ribbonDiv back to the img/url versions.
 
-import cornerUrl from '../assets/ornaments/corner.png';
-import ribbonUrl from '../assets/ornaments/ribbon.png';
+import { svgCorner, svgRibbon } from './SvgOrnaments.js';
 
-const CORNER_URL = cornerUrl;
-const RIBBON_URL = ribbonUrl;
+// import cornerUrl from '../assets/ornaments/corner.png';
+// import ribbonUrl from '../assets/ornaments/ribbon.png';
 
 function cornerImg(styleExtra = '') {
-  const img = document.createElement('img');
-  img.src = CORNER_URL;
-  img.alt = '';
-  img.setAttribute('aria-hidden', 'true');
-  img.style.cssText = `
+  const wrap = document.createElement('div');
+  wrap.setAttribute('aria-hidden', 'true');
+  wrap.style.cssText = `
     position:absolute;
     width: clamp(110px, 14vw, 220px);
-    height: auto;
+    aspect-ratio: 1 / 1;
     mix-blend-mode: screen;
     pointer-events: none;
     z-index: 2;
     ${styleExtra}
   `;
-  // Graceful fallback if the file isn't present yet
-  img.onerror = () => {
-    img.style.display = 'none';
-  };
-  return img;
+  wrap.appendChild(svgCorner());
+  return wrap;
 }
 
 function ribbonDiv(styleExtra = '') {
   const div = document.createElement('div');
+  div.setAttribute('aria-hidden', 'true');
   div.style.cssText = `
     position:absolute;
     height: clamp(28px, 3.2vw, 52px);
-    background: url(${RIBBON_URL}) center center / 100% 100% no-repeat;
     mix-blend-mode: screen;
     pointer-events: none;
     z-index: 1;
     ${styleExtra}
   `;
+  const svg = svgRibbon();
+  svg.style.cssText = 'width:100%;height:100%;display:block;';
+  div.appendChild(svg);
   return div;
 }
 
