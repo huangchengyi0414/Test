@@ -147,9 +147,9 @@ export const rooms = [
       latin: 'Directeur'
     },
     students: [
-      { name: '陳虹儒', honorific: '學姊' },
-      { name: '陳由恩', honorific: '學姊' },
       { name: '蔡兆霖', honorific: '學長' },
+      { name: '陳由恩', honorific: '學姊' },
+      { name: '陳虹儒', honorific: '學姊' },
       { name: '洪梓茗', honorific: '學長' },
       { name: '劉恩郡', honorific: '學長' },
       { name: '許維祥', honorific: '學長' }

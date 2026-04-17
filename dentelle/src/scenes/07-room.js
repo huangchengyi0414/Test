@@ -42,7 +42,7 @@ export function roomScene(roomData) {
     } else if (stage === 'entering') {
       hud.textContent = `${roomData.roman} · ${roomData.han} · 進入房間`;
     } else if (highlightIdx === -1) {
-      hud.textContent = `${roomData.roman} · ${roomData.han} · 授袍者就位`;
+      hud.textContent = `${roomData.roman} · ${roomData.han} · 準備受袍`;
     } else {
       hud.textContent = `${roomData.roman} · ${roomData.han} · 受袍 ${highlightIdx + 1}/${total}`;
     }
@@ -111,17 +111,14 @@ export function roomScene(roomData) {
     header.appendChild(ribbon);
     container.appendChild(header);
 
-    const { wall: w, teacherEl: t, studentEls: s } = createPortraitWall({
-      teacher: {
-        name: roomData.teacher.name,
-        role: roomData.teacher.latin
-      },
+    const { wall: w, studentEls: s } = createPortraitWall({
+      teacher: null,
       students: roomData.students.map((st) => ({
         name: st.name
         // honorific intentionally not passed — cleaner portrait
       }))
     });
-    teacherEl = t;
+    teacherEl = null;
     studentEls = s;
 
     w.style.position = 'absolute';

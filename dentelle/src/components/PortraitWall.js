@@ -199,17 +199,20 @@ export function createPortraitWall({ teacher, students }) {
   wall.className = 'portrait-wall';
   wall.style.setProperty('--cols', String(students.length));
 
-  const tp = createPortrait({
-    name: teacher.name,
-    role: teacher.role,
-    isTeacher: true
-  });
-  wall.appendChild(tp);
+  let teacherEl = null;
+  if (teacher) {
+    teacherEl = createPortrait({
+      name: teacher.name,
+      role: teacher.role,
+      isTeacher: true
+    });
+    wall.appendChild(teacherEl);
+  }
 
   const studentEls = students.map((s) =>
     createPortrait({ name: s.name, role: s.latin, isTeacher: false })
   );
   studentEls.forEach((el) => wall.appendChild(el));
 
-  return { wall, teacherEl: tp, studentEls };
+  return { wall, teacherEl, studentEls };
 }
