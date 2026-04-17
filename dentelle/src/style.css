@@ -238,98 +238,17 @@ body {
 }
 
 /* ------------------------------------------------------------ */
-/* Lace frame with scalloped tooth-edge border                    */
+/* Ornate frame — container for AI-generated corner + ribbon PNGs */
 /* ------------------------------------------------------------ */
-.lace-frame {
-  position: relative;
-  padding: clamp(28px, 4vw, 64px);
-  background: linear-gradient(180deg, rgba(21, 16, 10, 0.88), rgba(10, 6, 4, 0.96));
-  border: 1px solid rgba(201, 169, 110, 0.28);
-  box-shadow:
-    inset 0 0 80px rgba(201, 169, 110, 0.08),
-    0 0 80px rgba(0, 0, 0, 0.85);
-}
-
-.lace-frame::before,
-.lace-frame::after {
-  content: '';
-  position: absolute;
-  left: -1px;
-  right: -1px;
-  height: 14px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 14' preserveAspectRatio='none'><path d='M0 0 Q5 14 10 4 Q15 14 20 4 Q25 14 30 4 Q35 14 40 0 L40 0 L0 0 Z' fill='%23c9a96e' opacity='0.55'/><path d='M0 0 Q5 12 10 3 Q15 12 20 3 Q25 12 30 3 Q35 12 40 0' stroke='%23e8d5b7' stroke-width='0.4' fill='none' opacity='0.6'/></svg>");
-  background-repeat: repeat-x;
-  background-size: 40px 14px;
-  pointer-events: none;
-}
-
-.lace-frame::before {
-  top: -14px;
-}
-
-.lace-frame::after {
-  bottom: -14px;
-  transform: scaleY(-1);
-}
-
-.lace-side {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 14px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 40' preserveAspectRatio='none'><path d='M0 0 Q14 5 4 10 Q14 15 4 20 Q14 25 4 30 Q14 35 0 40' stroke='%23c9a96e' stroke-width='1' fill='none' opacity='0.55'/></svg>");
-  background-repeat: repeat-y;
-  background-size: 14px 40px;
-  pointer-events: none;
-}
-
-.lace-side.left {
-  left: -14px;
-}
-
-.lace-side.right {
-  right: -14px;
-  transform: scaleX(-1);
-}
-
-/* ------------------------------------------------------------ */
-/* Baroque tooth frame — for speech boxes / dignitary callouts    */
-/* ------------------------------------------------------------ */
+.lace-frame,
 .baroque-wrap {
   position: relative;
-  padding: clamp(30px, 3.5vw, 56px) clamp(40px, 4.5vw, 80px);
+  padding: clamp(48px, 6vw, 96px) clamp(56px, 7vw, 120px);
   background: linear-gradient(180deg, rgba(18, 12, 8, 0.92), rgba(6, 4, 3, 0.98));
-  border: 1px solid rgba(201, 169, 110, 0.4);
+  border: 1px solid rgba(201, 169, 110, 0.35);
   box-shadow:
-    inset 0 0 60px rgba(201, 169, 110, 0.08),
+    inset 0 0 80px rgba(201, 169, 110, 0.08),
     0 0 120px rgba(0, 0, 0, 0.85);
-}
-
-.baroque-wrap .baroque-corner {
-  position: absolute;
-  width: clamp(70px, 9vw, 130px);
-  height: clamp(70px, 9vw, 130px);
-  pointer-events: none;
-  color: var(--gold);
-}
-
-.baroque-wrap .baroque-top,
-.baroque-wrap .baroque-bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: clamp(22px, 2.4vw, 32px);
-  pointer-events: none;
-  color: var(--gold);
-}
-
-.baroque-wrap .baroque-top {
-  top: calc(-1 * clamp(22px, 2.4vw, 32px) + 3px);
-}
-
-.baroque-wrap .baroque-bottom {
-  bottom: calc(-1 * clamp(22px, 2.4vw, 32px) + 3px);
-  transform: scaleY(-1);
 }
 
 /* ------------------------------------------------------------ */
