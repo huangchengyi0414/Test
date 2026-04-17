@@ -12,14 +12,14 @@ export function revealScene() {
     // We attach decal-style planes on the root surface at various angles.
     const doorMat = new THREE.MeshStandardMaterial({
       color: 0x1a0f08,
-      emissive: 0xc9a96e,
+      emissive: 0xb76e79,
       emissiveIntensity: 0.7,
       roughness: 0.4,
       metalness: 0.2
     });
     const windowMat = new THREE.MeshStandardMaterial({
       color: 0x2a1c10,
-      emissive: 0xf8ecd1,
+      emissive: 0xf4dce0,
       emissiveIntensity: 0.9,
       roughness: 0.3
     });
@@ -110,7 +110,7 @@ export function revealScene() {
     starGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const starMat = new THREE.PointsMaterial({
       size: 0.14,
-      color: 0xf8ecd1,
+      color: 0xf4dce0,
       transparent: true,
       opacity: 0.85,
       sizeAttenuation: true
@@ -120,13 +120,13 @@ export function revealScene() {
 
     // Light
     scene.add(new THREE.AmbientLight(0x221812, 0.4));
-    const spot = new THREE.SpotLight(0xf8ecd1, 6, 60, Math.PI / 5, 0.4, 1.4);
+    const spot = new THREE.SpotLight(0xf4dce0, 6, 60, Math.PI / 5, 0.4, 1.4);
     spot.position.set(5, 12, 8);
     spot.target.position.set(0, 0, 0);
     scene.add(spot);
     scene.add(spot.target);
 
-    const goldRim = new THREE.DirectionalLight(0xc9a96e, 0.8);
+    const goldRim = new THREE.DirectionalLight(0xb76e79, 0.8);
     goldRim.position.set(-6, -2, -4);
     scene.add(goldRim);
 

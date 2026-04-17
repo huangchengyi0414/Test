@@ -62,7 +62,7 @@ export function loginScene() {
     camera.lookAt(0, -0.6, 0);
 
     scene.add(new THREE.AmbientLight(0x120b06, 0.4));
-    const spot = new THREE.SpotLight(0xc9a96e, 3.0, 20, Math.PI / 7, 0.6, 1.3);
+    const spot = new THREE.SpotLight(0xb76e79, 3.0, 20, Math.PI / 7, 0.6, 1.3);
     spot.position.set(0, 8, 5);
     spot.target.position.set(0, -0.6, 0);
     scene.add(spot, spot.target);
@@ -177,7 +177,7 @@ export function loginScene() {
       }
       .er-inst {
         font-family: var(--font-han);
-        color: #d8c9a8;
+        color: #d8b8bc;
         font-weight: 300;
         letter-spacing: 0.5em;
         font-size: clamp(11px, 1.05vw, 15px);
@@ -186,7 +186,7 @@ export function loginScene() {
       .er-class-line {
         font-family: var(--font-italic);
         font-style: italic;
-        color: #c9a96e;
+        color: #b76e79;
         font-size: clamp(12px, 1.15vw, 17px);
         letter-spacing: 0.35em;
         opacity: 0.9;

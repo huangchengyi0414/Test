@@ -54,12 +54,12 @@ export function roomScene(roomData) {
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.cssText = `
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:60vmin;height:60vmin;color:#c9a96e;pointer-events:none;opacity:0;
+      width:60vmin;height:60vmin;color:#b76e79;pointer-events:none;opacity:0;
     `;
     svg.innerHTML = `
       <defs>
         <linearGradient id="archG-${roomData.index}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.8"/>
+          <stop offset="0%" stop-color="#b76e79" stop-opacity="0.8"/>
           <stop offset="100%" stop-color="#8b6833" stop-opacity="0.1"/>
         </linearGradient>
       </defs>

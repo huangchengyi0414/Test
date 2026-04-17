@@ -125,7 +125,7 @@ export function createScallopRibbon(width = 280) {
     d += `Q${x + step / 2} 0 ${x + step} 9 `;
   }
   path.setAttribute('d', d);
-  path.setAttribute('stroke', '#c9a96e');
+  path.setAttribute('stroke', '#b76e79');
   path.setAttribute('stroke-width', '1');
   path.setAttribute('fill', 'none');
   path.setAttribute('opacity', '0.7');

@@ -159,7 +159,7 @@ function ornament() {
       'd',
       'M0 0 Q 8 2 12 8 M0 0 Q 2 8 8 12 M0 0 Q 5 5 10 4 Q 4 5 5 10'
     );
-    p.setAttribute('stroke', '#c9a96e');
+    p.setAttribute('stroke', '#b76e79');
     p.setAttribute('stroke-width', 0.5);
     p.setAttribute('fill', 'none');
     p.setAttribute('opacity', 0.75);

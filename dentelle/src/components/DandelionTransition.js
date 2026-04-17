@@ -10,7 +10,7 @@ function buildSeedSVG() {
   stem.setAttribute('y1', 0);
   stem.setAttribute('x2', 0);
   stem.setAttribute('y2', 14);
-  stem.setAttribute('stroke', '#e8d5b7');
+  stem.setAttribute('stroke', '#e0c4c6');
   stem.setAttribute('stroke-width', '0.6');
   stem.setAttribute('opacity', '0.7');
   g.appendChild(stem);
@@ -26,7 +26,7 @@ function buildSeedSVG() {
     line.setAttribute('y1', 0);
     line.setAttribute('x2', x);
     line.setAttribute('y2', y);
-    line.setAttribute('stroke', '#f8ecd1');
+    line.setAttribute('stroke', '#f4dce0');
     line.setAttribute('stroke-width', '0.4');
     line.setAttribute('opacity', 0.55 + Math.random() * 0.35);
     g.appendChild(line);
@@ -35,14 +35,14 @@ function buildSeedSVG() {
     tip.setAttribute('cx', x);
     tip.setAttribute('cy', y);
     tip.setAttribute('r', 0.6);
-    tip.setAttribute('fill', '#f8ecd1');
+    tip.setAttribute('fill', '#f4dce0');
     tip.setAttribute('opacity', 0.8);
     g.appendChild(tip);
   }
 
   const core = document.createElementNS(ns, 'circle');
   core.setAttribute('r', 1.2);
-  core.setAttribute('fill', '#e8c889');
+  core.setAttribute('fill', '#e8b5b8');
   g.appendChild(core);
 
   return g;

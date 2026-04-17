@@ -34,11 +34,11 @@ export function blessingVideoScene() {
       border:1px solid rgba(201,169,110,0.3);
     `;
     inner.innerHTML = `
-      <svg width="clamp(72px,7vw,110px)" height="clamp(72px,7vw,110px)" viewBox="0 0 64 64" style="color:#c9a96e;">
+      <svg width="clamp(72px,7vw,110px)" height="clamp(72px,7vw,110px)" viewBox="0 0 64 64" style="color:#b76e79;">
         <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1" fill="none" opacity="0.55"/>
         <polygon points="25,20 25,44 46,32" fill="currentColor" opacity="0.9"/>
       </svg>
-      <div class="overline" style="color:#c9a96e;">Vidéo · 祝福影片</div>
+      <div class="overline" style="color:#b76e79;">Vidéo · 祝福影片</div>
       <p class="body-han" style="color:#9a8a70;opacity:0.7;">（多段影片將於典禮當天插入）</p>
     `;
     frame.appendChild(inner);

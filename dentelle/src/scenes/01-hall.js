@@ -16,8 +16,8 @@ export function hallScene() {
     arch.innerHTML = `
       <defs>
         <linearGradient id="arch-g" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.45"/>
-          <stop offset="100%" stop-color="#c9a96e" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#b76e79" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#b76e79" stop-opacity="0"/>
         </linearGradient>
       </defs>
       <path d="M200 600 L200 250 Q 200 80 500 80 Q 800 80 800 250 L800 600 Z"

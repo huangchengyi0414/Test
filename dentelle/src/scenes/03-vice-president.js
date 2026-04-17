@@ -41,7 +41,7 @@ export function vicePresidentScene() {
       border:1px solid rgba(201,169,110,0.3);
     `;
     playArea.innerHTML = `
-      <svg width="clamp(56px,6vw,96px)" height="clamp(56px,6vw,96px)" viewBox="0 0 64 64" style="color:#c9a96e;">
+      <svg width="clamp(56px,6vw,96px)" height="clamp(56px,6vw,96px)" viewBox="0 0 64 64" style="color:#b76e79;">
         <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1" fill="none" opacity="0.6"/>
         <polygon points="25,20 25,44 46,32" fill="currentColor" opacity="0.9"/>
       </svg>
