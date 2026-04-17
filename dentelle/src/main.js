@@ -3,30 +3,38 @@ import { dandelionBlow } from './components/DandelionTransition.js';
 
 import { loginScene } from './scenes/00-login.js';
 import { hallScene } from './scenes/01-hall.js';
-import { blessingsScene } from './scenes/02-blessings.js';
-import { roomScene } from './scenes/03-room.js';
-import { oathScene } from './scenes/04-oath.js';
-import { groupPhotoScene } from './scenes/05-group-photo.js';
-import { revealScene } from './scenes/06-reveal.js';
+import { dentelleIntroScene } from './scenes/02-dentelle-intro.js';
+import { vicePresidentScene } from './scenes/03-vice-president.js';
+import { dignitarySpeechScene } from './scenes/04-dignitary-speech.js';
+import { guestIntroScene } from './scenes/05-guest-intro.js';
+import { blessingVideoScene } from './scenes/06-blessing-video.js';
+import { roomScene } from './scenes/07-room.js';
+import { studentSpeechScene } from './scenes/08-student-speech.js';
+import { oathScene } from './scenes/09-oath.js';
+import { groupPhotoScene } from './scenes/10-group-photo.js';
+import { revealScene } from './scenes/11-reveal.js';
 import { rooms } from './data/ceremony.js';
 
 const app = document.getElementById('app');
 const hudChapter = document.getElementById('hud-chapter');
 const hudHint = document.getElementById('hud-hint');
 
-// Sequence — each entry has a { factory, chapter, transition } descriptor.
-// `transition: 'dandelion'` means play dandelion blow before the scene mounts.
 const sequence = [
   { factory: loginScene, chapter: 'Prélude · 登入' },
-  { factory: hallScene, chapter: 'I · 大廳', transition: 'dandelion' },
-  { factory: blessingsScene, chapter: 'II · 老師祝福', transition: 'fade' },
+  { factory: hallScene, chapter: 'I · 典禮開始前', transition: 'dandelion' },
+  { factory: dentelleIntroScene, chapter: 'II · Dentelle 之意', transition: 'fade' },
+  { factory: vicePresidentScene, chapter: 'III · 副院長致詞', transition: 'fade' },
+  { factory: dignitarySpeechScene, chapter: 'IV · 來賓致詞', transition: 'fade' },
+  { factory: guestIntroScene, chapter: 'V · 與會師長', transition: 'dandelion' },
+  { factory: blessingVideoScene, chapter: 'VI · 師長祝福', transition: 'fade' },
   ...rooms.map((room) => ({
     factory: () => roomScene(room),
-    chapter: `III · ${room.name} ${room.han}`,
+    chapter: `${room.roman} · ${room.han}`,
     transition: 'dandelion'
   })),
-  { factory: oathScene, chapter: 'IV · 牙醫師誓詞', transition: 'fade' },
-  { factory: groupPhotoScene, chapter: 'V · 大合照', transition: 'fade' },
+  { factory: studentSpeechScene, chapter: 'VII · 在校生致辭', transition: 'dandelion' },
+  { factory: oathScene, chapter: 'VIII · 醫師宣誓', transition: 'fade' },
+  { factory: groupPhotoScene, chapter: 'IX · 大合照', transition: 'fade' },
   { factory: revealScene, chapter: 'Révélation · 揭曉', transition: 'fade' }
 ];
 
@@ -35,8 +43,8 @@ let currentScene = null;
 let isTransitioning = false;
 
 function setHUD(chapter, hint) {
-  if (chapter) hudChapter.textContent = chapter;
-  if (hint !== undefined) hudHint.textContent = hint;
+  if (chapter && hudChapter) hudChapter.textContent = chapter;
+  if (hint !== undefined && hudHint) hudHint.textContent = hint;
 }
 
 async function goToIndex(idx) {
@@ -66,7 +74,6 @@ async function goToIndex(idx) {
   const scene = entry.factory();
   currentScene = scene;
 
-  // Each scene exposes { mount, unmount, onAdvance? }
   scene.mount(node, { advance, goBack, setHUD });
   requestAnimationFrame(() => node.classList.add('active'));
 
@@ -76,15 +83,12 @@ async function goToIndex(idx) {
 }
 
 function advance() {
-  // If the current scene handles its own internal step (e.g. room highlights
-  // multiple students before leaving), delegate to it first.
   if (currentScene?.onAdvance) {
     const consumed = currentScene.onAdvance();
     if (consumed) return;
   }
   goToIndex(currentIdx + 1);
 }
-
 function goBack() {
   if (currentScene?.onBack) {
     const consumed = currentScene.onBack();
@@ -93,7 +97,6 @@ function goBack() {
   goToIndex(currentIdx - 1);
 }
 
-// Keyboard + click routing
 window.addEventListener('keydown', (e) => {
   if (e.key === ' ' || e.key === 'ArrowRight' || e.key === 'Enter') {
     e.preventDefault();
@@ -104,10 +107,8 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-// Click anywhere advances, but not on the interactive login button or 3D canvas drag.
 app.addEventListener('click', (e) => {
   if (e.target.closest('[data-no-advance]')) return;
-  // When scene wants clicks (login button), it sets data-no-advance on its interactive bits.
   advance();
 });
 

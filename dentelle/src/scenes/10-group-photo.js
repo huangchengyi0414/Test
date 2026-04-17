@@ -1,11 +1,12 @@
 import gsap from 'gsap';
 import { createLaceFrame } from '../components/LaceFrame.js';
-import { createSpotlight } from '../components/SpotlightStage.js';
 import { groupPhoto } from '../data/ceremony.js';
 
 export function groupPhotoScene() {
   function mount(node, { setHUD }) {
-    node.appendChild(createSpotlight());
+    const mist = document.createElement('div');
+    mist.className = 'teal-mist';
+    node.appendChild(mist);
 
     const wrap = document.createElement('div');
     wrap.style.cssText =
@@ -79,7 +80,7 @@ export function groupPhotoScene() {
       ease: 'power2.out'
     });
 
-    setHUD('V · Photo · 大合照', '投影片至此　·　按 → 揭曉');
+    setHUD('IX · 大合照', '投影片至此　·　按 → 揭曉');
   }
   function unmount() {}
   return { mount, unmount };

@@ -1,26 +1,22 @@
 import gsap from 'gsap';
 import { createLaceFrame } from '../components/LaceFrame.js';
-import { createSpotlight } from '../components/SpotlightStage.js';
 import { hallNotes } from '../data/ceremony.js';
 
 export function hallScene() {
-  let onResize;
   function mount(container, { setHUD }) {
-    container.appendChild(createSpotlight());
+    const mist = document.createElement('div');
+    mist.className = 'teal-mist';
+    container.appendChild(mist);
 
-    // Architectural silhouette — arched doorway implied via SVG
     const arch = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     arch.setAttribute('viewBox', '0 0 1000 600');
-    arch.setAttribute(
-      'preserveAspectRatio',
-      'xMidYMid slice'
-    );
+    arch.setAttribute('preserveAspectRatio', 'xMidYMid slice');
     arch.style.cssText =
-      'position:absolute;inset:0;width:100%;height:100%;opacity:0.35;pointer-events:none;';
+      'position:absolute;inset:0;width:100%;height:100%;opacity:0.32;pointer-events:none;';
     arch.innerHTML = `
       <defs>
         <linearGradient id="arch-g" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.4"/>
+          <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.45"/>
           <stop offset="100%" stop-color="#c9a96e" stop-opacity="0"/>
         </linearGradient>
       </defs>
@@ -28,17 +24,13 @@ export function hallScene() {
             fill="none" stroke="url(#arch-g)" stroke-width="1.5"/>
       <path d="M260 600 L260 260 Q 260 130 500 130 Q 740 130 740 260 L740 600 Z"
             fill="none" stroke="url(#arch-g)" stroke-width="1"/>
-      <!-- floor tiles -->
-      <line x1="0" y1="520" x2="1000" y2="520" stroke="#c9a96e" stroke-width="0.5" opacity="0.4"/>
-      <line x1="0" y1="560" x2="1000" y2="560" stroke="#c9a96e" stroke-width="0.3" opacity="0.25"/>
     `;
     container.appendChild(arch);
 
-    // Central lace frame
     const frame = createLaceFrame();
     frame.style.cssText = `
-      width:min(60vw, 760px);
-      min-height:52vh;
+      width:min(62vw, 820px);
+      min-height:54vh;
       display:flex;flex-direction:column;align-items:center;justify-content:center;
       text-align:center;position:relative;z-index:2;
     `;
@@ -46,13 +38,14 @@ export function hallScene() {
     frame.innerHTML += `
       <div class="overline">${hallNotes.overline}</div>
       <div class="rule"></div>
-      <h2 class="title-han" style="margin-bottom:0.6em;">${hallNotes.title}</h2>
-      <ul style="list-style:none;text-align:left;margin-top:2vh;display:grid;gap:1.2em;">
+      <h2 class="title-han" style="margin-bottom:0.4em;">${hallNotes.title}</h2>
+      <p class="body-han" style="opacity:0.8;margin-bottom:1.8em;">${hallNotes.intro}</p>
+      <ul style="list-style:none;text-align:left;margin-top:1vh;display:grid;gap:1.3em;">
         ${hallNotes.notes
           .map(
             (n) => `
-          <li style="display:grid;grid-template-columns:auto 1fr;gap:1.4em;align-items:baseline;">
-            <span class="overline" style="color:var(--gold);min-width:6em;">${n.fr}</span>
+          <li style="display:grid;grid-template-columns:auto 1fr;gap:1.6em;align-items:baseline;">
+            <span class="overline" style="color:var(--gold);min-width:8.5em;">${n.fr}</span>
             <span class="body-han">${n.han}</span>
           </li>`
           )
@@ -77,12 +70,8 @@ export function hallScene() {
       ease: 'power2.out'
     });
 
-    setHUD('I · 大廳  Grand Vestibule', '空白鍵 / → 進入老師祝福');
-    onResize = () => {};
+    setHUD('I · 典禮開始前', '空白鍵 / → 繼續');
   }
-
-  function unmount() {
-    window.removeEventListener('resize', onResize);
-  }
+  function unmount() {}
   return { mount, unmount };
 }
