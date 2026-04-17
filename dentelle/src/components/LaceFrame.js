@@ -1,11 +1,12 @@
-// Ornate frame — uses AI-generated PNG ornaments placed at
-// public/ornaments/corner.png  (1024×1024 black bg, top-left quadrant used)
-// public/ornaments/ribbon.png  (wide horizontal, black bg)
-//
+// Ornate frame — uses AI-generated PNG ornaments imported through Vite,
+// so they're bundled into the standalone HTML as base64.
 // Black background is removed at display time via CSS mix-blend-mode: screen.
 
-const CORNER_URL = 'ornaments/corner.png';
-const RIBBON_URL = 'ornaments/ribbon.png';
+import cornerUrl from '../assets/ornaments/corner.png';
+import ribbonUrl from '../assets/ornaments/ribbon.png';
+
+const CORNER_URL = cornerUrl;
+const RIBBON_URL = ribbonUrl;
 
 function cornerImg(styleExtra = '') {
   const img = document.createElement('img');
