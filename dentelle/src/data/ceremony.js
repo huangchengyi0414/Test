@@ -57,12 +57,12 @@ export const dentelleIntro = {
 
 // ————————————————————————————————————————————————
 // 副院長致詞（開場影片）
-// TODO: 姓名待確認，目前用「副院長」占位
 // ————————————————————————————————————————————————
 export const vicePresidentSpeech = {
   overline: 'Discours d\u2019Ouverture · 開場致詞',
   title: '醫學院副院長致詞',
-  speaker: '副院長', // TODO: 姓名
+  speaker: '張育誌',
+  speakerTitle: '醫學院副院長',
   videoPlaceholder: true, // 真實 MP4 檔進來後替換
   caption:
     '醫學院的大家長上台致詞，以影片方式呈現'

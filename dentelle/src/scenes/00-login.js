@@ -190,7 +190,7 @@ export function loginScene() {
         font-size: clamp(12px, 1.15vw, 17px);
         letter-spacing: 0.35em;
         opacity: 0.9;
-        text-shadow: 0 0 16px rgba(201,169,110,0.4);
+        text-shadow: 0 0 16px rgba(183,110,121,0.4);
       }
       .er-title {
         font-family: var(--font-decor);

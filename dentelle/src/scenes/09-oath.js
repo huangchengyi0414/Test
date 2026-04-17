@@ -9,8 +9,8 @@ export function oathScene() {
     candles.style.cssText = `
       position:absolute;inset:0;pointer-events:none;
       background:
-        radial-gradient(circle at 12% 82%, rgba(232,200,137,0.2), transparent 22%),
-        radial-gradient(circle at 88% 82%, rgba(232,200,137,0.2), transparent 22%),
+        radial-gradient(circle at 12% 82%, rgba(232,181,184,0.2), transparent 22%),
+        radial-gradient(circle at 88% 82%, rgba(232,181,184,0.2), transparent 22%),
         radial-gradient(circle at 50% 8%, rgba(248,236,209,0.14), transparent 40%);
     `;
     container.appendChild(candles);

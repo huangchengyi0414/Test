@@ -25,7 +25,7 @@ export function vicePresidentScene() {
       <div class="overline">${vicePresidentSpeech.overline}</div>
       <div class="rule"></div>
       <h2 class="title-han" style="margin-bottom:0.4em;">${vicePresidentSpeech.title}</h2>
-      <p class="body-italic" style="font-style:italic;">${vicePresidentSpeech.speaker}</p>
+      <p class="body-italic" style="font-style:italic;">${vicePresidentSpeech.speakerTitle ?? ''} ${vicePresidentSpeech.speaker}</p>
     `;
     wrap.appendChild(head);
 
@@ -38,7 +38,7 @@ export function vicePresidentScene() {
       align-items:center;justify-content:center;gap:18px;
       background:
         radial-gradient(ellipse at 50% 50%, #1a1008 0%, #000 80%);
-      border:1px solid rgba(201,169,110,0.3);
+      border:1px solid rgba(183,110,121,0.3);
     `;
     playArea.innerHTML = `
       <svg width="clamp(56px,6vw,96px)" height="clamp(56px,6vw,96px)" viewBox="0 0 64 64" style="color:#b76e79;">

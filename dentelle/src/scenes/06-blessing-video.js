@@ -31,7 +31,7 @@ export function blessingVideoScene() {
       width:100%;height:100%;display:flex;flex-direction:column;
       align-items:center;justify-content:center;gap:20px;
       background: radial-gradient(ellipse at 50% 50%, #0c1418 0%, #000 85%);
-      border:1px solid rgba(201,169,110,0.3);
+      border:1px solid rgba(183,110,121,0.3);
     `;
     inner.innerHTML = `
       <svg width="clamp(72px,7vw,110px)" height="clamp(72px,7vw,110px)" viewBox="0 0 64 64" style="color:#b76e79;">
