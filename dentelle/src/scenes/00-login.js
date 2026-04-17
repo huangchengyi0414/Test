@@ -154,8 +154,9 @@ export function loginScene() {
     const overlay = document.createElement('div');
     overlay.style.cssText = `
       position:absolute;inset:0;display:flex;flex-direction:column;
-      align-items:center;justify-content:center;pointer-events:none;
-      text-align:center;gap:clamp(24px,3vh,40px);padding:0 6vw;
+      align-items:center;justify-content:flex-start;pointer-events:none;
+      text-align:center;gap:clamp(14px,1.8vh,22px);
+      padding:clamp(48px,8vh,110px) 6vw 0;
     `;
     overlay.innerHTML = `
       <div class="er-class">
@@ -194,9 +195,9 @@ export function loginScene() {
       .er-title {
         font-family: var(--font-decor);
         font-weight: 900;
-        font-size: clamp(80px, 18vw, 300px);
-        line-height: 0.9;
-        letter-spacing: 0.04em;
+        font-size: clamp(58px, 11vw, 170px);
+        line-height: 1;
+        letter-spacing: 0.02em;
         margin: 0;
       }
       .er-hint {
