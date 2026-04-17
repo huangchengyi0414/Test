@@ -4,7 +4,6 @@
 
 export const ceremonyMeta = {
   title: 'DENTELLE',
-  titlePronounce: 'ㄉㄨㄥˋ ㄉㄜ˙ㄌㄟˋ',
   subtitleFr: 'Cérémonie de la Blouse Blanche',
   institutionFr: 'NCKU · Faculté de Chirurgie Dentaire',
   institutionHan: '國立成功大學 牙醫學系',
@@ -46,7 +45,6 @@ export const hallNotes = {
 export const dentelleIntro = {
   overline: 'Le Sens du Mot',
   title: 'Dentelle 之意',
-  pronounce: 'ㄉㄨㄥˋ ㄉㄜ˙ㄌㄟˋ',
   paragraphs: [
     '「Dentelle」這個帶有 Den 的法文單字，指的是精細的蕾絲。',
     '在牙醫的世界裡，這份精細，是我們對每一條齦溝、每一處修復的執著。',

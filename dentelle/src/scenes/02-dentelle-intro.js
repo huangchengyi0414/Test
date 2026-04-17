@@ -24,8 +24,6 @@ export function dentelleIntroScene() {
                  font-size:clamp(58px,10vw,150px);line-height:1;margin:0.3em 0 0.1em;">
         Dentelle
       </h2>
-      <div style="font-family:var(--font-han);color:#9a8a70;letter-spacing:0.5em;
-                  font-size:clamp(11px,1.1vw,15px);opacity:0.75;">${dentelleIntro.pronounce}</div>
     `;
     wrap.appendChild(headline);
 
