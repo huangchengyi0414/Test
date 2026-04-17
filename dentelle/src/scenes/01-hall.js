@@ -40,19 +40,17 @@ export function hallScene() {
       <div class="rule"></div>
       <h2 class="title-han" style="margin-bottom:0.5em;text-align:center;">${hallNotes.title}</h2>
       <p class="body-han" style="opacity:0.8;margin-bottom:2em;text-align:center;">${hallNotes.intro}</p>
-      <ol style="list-style:none;counter-reset:notes;margin:0 auto;display:grid;gap:1.4em;max-width:54ch;">
+      <div style="display:grid;grid-template-columns:max-content 1fr;
+                  gap:1.4em 2.4em;align-items:baseline;
+                  max-width:72ch;margin:0 auto;text-align:left;">
         ${hallNotes.notes
           .map(
             (n) => `
-          <li style="display:grid;grid-template-columns:2.4em 1fr;align-items:baseline;counter-increment:notes;">
-            <span style="font-family:var(--font-italic);font-style:italic;color:var(--gold);font-size:clamp(14px,1.4vw,20px);letter-spacing:0.1em;">
-              <span style="color:var(--gold-bright);">·</span>
-            </span>
-            <span class="body-han" style="line-height:1.9;">${n.han}</span>
-          </li>`
+          <div class="overline" style="color:var(--gold);white-space:nowrap;">${n.fr}</div>
+          <div class="body-han" style="text-align:left;line-height:1.9;">${n.han}</div>`
           )
           .join('')}
-      </ol>
+      </div>
     `;
 
     container.appendChild(frame);
