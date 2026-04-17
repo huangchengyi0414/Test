@@ -106,54 +106,76 @@ body {
 }
 
 /* ------------------------------------------------------------ */
-/* Typography — gold foil display title                           */
+/* Typography — embossed metallic gold display title              */
 /* ------------------------------------------------------------ */
 .foil-title {
   font-family: var(--font-decor);
-  font-weight: 700;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  position: relative;
+  display: inline-block;
+  /* Metallic gradient — stronger contrast from highlight to shadow */
   background: linear-gradient(
     180deg,
-    #fff6d8 0%,
-    #f4dfa8 22%,
-    #c9a96e 50%,
-    #8b6833 80%,
-    #5e431e 100%
+    #fff9e6 0%,
+    #fbebb8 8%,
+    #f1d48a 20%,
+    #d9b572 36%,
+    #c9a96e 48%,
+    #a78341 62%,
+    #7a5a24 78%,
+    #4a3311 92%,
+    #2a1c08 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 24px rgba(201, 169, 110, 0.35))
-    drop-shadow(0 2px 0 rgba(0, 0, 0, 0.3));
-  letter-spacing: 0.12em;
-  position: relative;
+
+  /* Stacked shadows: the first 6 are downward offsets that simulate
+     letter thickness (extrusion). The last two are ambient floor
+     shadows + a warm halo. */
+  text-shadow:
+    0 1px 0 rgba(54, 36, 14, 0.95),
+    0 2px 0 rgba(42, 28, 10, 0.9),
+    0 3px 0 rgba(32, 22, 8, 0.85),
+    0 4px 0 rgba(22, 15, 5, 0.75),
+    0 5px 0 rgba(14, 10, 4, 0.55),
+    0 6px 0 rgba(8, 6, 3, 0.35),
+    0 8px 14px rgba(0, 0, 0, 0.55),
+    0 14px 40px rgba(0, 0, 0, 0.4),
+    0 0 38px rgba(201, 169, 110, 0.3);
+
+  filter: drop-shadow(0 0 24px rgba(232, 200, 137, 0.16));
 }
 
+/* Moving specular highlight — sweeps across the metal face */
 .foil-title::after {
-  /* subtle diagonal shimmer sweep */
   content: attr(data-text);
   position: absolute;
   inset: 0;
   background: linear-gradient(
     110deg,
-    transparent 35%,
-    rgba(255, 246, 216, 0.55) 50%,
-    transparent 65%
+    transparent 38%,
+    rgba(255, 250, 230, 0.85) 49%,
+    rgba(255, 250, 230, 0.3) 51%,
+    transparent 62%
   );
+  background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   mix-blend-mode: screen;
-  animation: foil-shimmer 6s ease-in-out infinite;
   pointer-events: none;
+  animation: foil-shimmer 6s ease-in-out infinite;
 }
 
 @keyframes foil-shimmer {
   0%,
   100% {
-    background-position: -120% 0;
+    background-position: -60% 0;
   }
   50% {
-    background-position: 220% 0;
+    background-position: 160% 0;
   }
 }
 
