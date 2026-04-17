@@ -38,19 +38,21 @@ export function hallScene() {
     frame.innerHTML += `
       <div class="overline">${hallNotes.overline}</div>
       <div class="rule"></div>
-      <h2 class="title-han" style="margin-bottom:0.4em;">${hallNotes.title}</h2>
-      <p class="body-han" style="opacity:0.8;margin-bottom:1.8em;">${hallNotes.intro}</p>
-      <ul style="list-style:none;text-align:left;margin-top:1vh;display:grid;gap:1.3em;">
+      <h2 class="title-han" style="margin-bottom:0.5em;text-align:center;">${hallNotes.title}</h2>
+      <p class="body-han" style="opacity:0.8;margin-bottom:2em;text-align:center;">${hallNotes.intro}</p>
+      <ol style="list-style:none;counter-reset:notes;margin:0 auto;display:grid;gap:1.4em;max-width:54ch;">
         ${hallNotes.notes
           .map(
             (n) => `
-          <li style="display:grid;grid-template-columns:auto 1fr;gap:1.6em;align-items:baseline;">
-            <span class="overline" style="color:var(--gold);min-width:8.5em;">${n.fr}</span>
-            <span class="body-han">${n.han}</span>
+          <li style="display:grid;grid-template-columns:2.4em 1fr;align-items:baseline;counter-increment:notes;">
+            <span style="font-family:var(--font-italic);font-style:italic;color:var(--gold);font-size:clamp(14px,1.4vw,20px);letter-spacing:0.1em;">
+              <span style="color:var(--gold-bright);">·</span>
+            </span>
+            <span class="body-han" style="line-height:1.9;">${n.han}</span>
           </li>`
           )
           .join('')}
-      </ul>
+      </ol>
     `;
 
     container.appendChild(frame);

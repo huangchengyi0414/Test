@@ -165,8 +165,6 @@ export function loginScene() {
 
       <h1 class="er-title foil-title" data-text="DENTELLE">DENTELLE</h1>
 
-      <div class="er-pron">ㄉㄨㄥˋ　ㄉㄜ˙　ㄌㄟˋ</div>
-
       <div class="er-hint">PRESS&nbsp;ANY&nbsp;BUTTON</div>
     `;
     container.appendChild(overlay);
@@ -198,16 +196,8 @@ export function loginScene() {
         font-weight: 900;
         font-size: clamp(80px, 18vw, 300px);
         line-height: 0.9;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.04em;
         margin: 0;
-      }
-      .er-pron {
-        font-family: var(--font-han);
-        color: #9a8a70;
-        font-size: clamp(11px, 1.05vw, 15px);
-        letter-spacing: 0.55em;
-        opacity: 0.7;
-        margin-top: -8px;
       }
       .er-hint {
         font-family: var(--font-latin);
@@ -226,11 +216,10 @@ export function loginScene() {
     container.appendChild(style);
 
     // Cinematic fade-in
-    gsap.set('.er-class, .er-title, .er-pron, .er-hint', { opacity: 0, y: 18 });
+    gsap.set('.er-class, .er-title, .er-hint', { opacity: 0, y: 18 });
     gsap.to('.er-class', { opacity: 1, y: 0, duration: 2.0, delay: 0.4, ease: 'power2.out' });
     gsap.to('.er-title', { opacity: 1, y: 0, duration: 2.8, delay: 1.0, ease: 'power3.out' });
-    gsap.to('.er-pron', { opacity: 1, y: 0, duration: 1.4, delay: 2.6, ease: 'power2.out' });
-    gsap.to('.er-hint', { opacity: 1, y: 0, duration: 1.0, delay: 3.4, ease: 'power2.out' });
+    gsap.to('.er-hint', { opacity: 1, y: 0, duration: 1.0, delay: 2.8, ease: 'power2.out' });
 
     onResize = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);

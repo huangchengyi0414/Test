@@ -1,13 +1,11 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { createToothMesh } from '../components/ToothMesh.js';
-import { reveal } from '../data/ceremony.js';
 
 // Reveal scene: camera starts looking "at" the tooth from inside a room (zoomed in),
 // then pulls back and out until the whole building-tooth is visible with many windows/doors.
 export function revealScene() {
   let renderer, scene, camera, tooth, stars, rafId, onResize;
-  let captionEl;
 
   function addDoorsAndWindows(toothGroup) {
     // Tooth's bounding is roughly radius 0.7 crown, height 3.6 tip-to-top.
@@ -141,21 +139,7 @@ export function revealScene() {
     addDoorsAndWindows(tooth);
     scene.add(tooth);
 
-    // Caption overlay (fades in at the end)
-    captionEl = document.createElement('div');
-    captionEl.style.cssText = `
-      position:absolute;left:0;right:0;bottom:12vh;text-align:center;
-      opacity:0;z-index:3;
-    `;
-    captionEl.innerHTML = `
-      <div class="overline">${reveal.overline}</div>
-      <div class="rule"></div>
-      <div class="title-han" style="font-size:clamp(28px,3.6vw,50px);margin:0.4em 0;">${reveal.han}</div>
-      <p style="font-family:var(--font-latin);font-style:italic;color:var(--gold);letter-spacing:0.15em;font-size:clamp(14px,1.4vw,20px);">
-        « ${reveal.fr} »
-      </p>
-    `;
-    container.appendChild(captionEl);
+    // Caption intentionally left out — user wants pure 3D reveal for now.
 
     // Animate the pull-back
     const tl = gsap.timeline();
@@ -168,7 +152,6 @@ export function revealScene() {
       onUpdate: () => camera.lookAt(0, -0.2, 0)
     });
     tl.to(tooth.rotation, { y: Math.PI * 0.35, duration: 7.5, ease: 'power1.inOut' }, 0);
-    tl.to(captionEl, { opacity: 1, duration: 1.8, ease: 'power2.out' }, 5.2);
 
     onResize = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);

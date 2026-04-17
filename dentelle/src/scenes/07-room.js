@@ -84,12 +84,11 @@ export function roomScene(roomData) {
       <div class="overline">Chambre ${roomData.roman}</div>
       <h1 class="foil-title" data-text="${roomData.roman}"
           style="font-family:var(--font-decor);font-weight:900;
-                 font-size:clamp(90px,16vw,220px);line-height:1;margin:0;letter-spacing:0.15em;">
+                 font-size:clamp(90px,16vw,220px);line-height:1;margin:0;letter-spacing:0.05em;">
         ${roomData.roman}
       </h1>
       <div class="title-han" style="font-size:clamp(24px,3vw,40px);">${roomData.han}</div>
-      <div class="rule-ornate" style="margin-top:18px;">${roomData.timeWindow}</div>
-      <div class="body-italic" style="margin-top:12px;font-style:italic;color:var(--gold-bright);max-width:42ch;">
+      <div class="body-italic" style="margin-top:18px;font-style:italic;color:var(--gold-bright);max-width:42ch;">
         「授袍人　${roomData.teacher.name}　${roomData.teacher.title}」
       </div>
       <div class="body-han" style="margin-top:8px;opacity:0.75;font-style:italic;">請隨我進入 ${roomData.han}</div>
@@ -104,7 +103,7 @@ export function roomScene(roomData) {
       display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;
     `;
     header.innerHTML = `
-      <div class="overline">Chambre ${roomData.roman}  ·  ${roomData.timeWindow}</div>
+      <div class="overline">Chambre ${roomData.roman}</div>
       <h2 class="title-han" style="font-size:clamp(24px,3vw,40px);">${roomData.han}</h2>
     `;
     const ribbon = createScallopRibbon(300);
@@ -118,8 +117,8 @@ export function roomScene(roomData) {
         role: roomData.teacher.latin
       },
       students: roomData.students.map((st) => ({
-        name: st.name,
-        latin: st.honorific
+        name: st.name
+        // honorific intentionally not passed — cleaner portrait
       }))
     });
     teacherEl = t;
